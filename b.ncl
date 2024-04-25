@@ -1,4 +1,5 @@
-datapath = "/data06/yyq/mls/licom2_/addwater/exe/"
+;画经向流函数(包含年均和月数据)
+datapath = "/data06/yyq/mls/licom2_/ctrl/exe/"
 fileslist = systemfunc("ls "+ datapath+"MMEAN" +"*")    
 f = addfiles(fileslist, "r")   
 ;f = addfile(datapath+"YME.nc", "r")

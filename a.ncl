@@ -1,4 +1,5 @@
-datapath = "/data06/yyq/mls/licom2_/addwater/exe/"
+;画平均sst场
+datapath = "/data06/yyq/mls/licom2_/ctrl/exe/"
 
 f = addfile(datapath+"YME.nc", "r")
 sst_a = f->ts(:,0,:,:)
