@@ -1,4 +1,4 @@
-datapath=/data06/yyq/mls/licom2_/ctrl/exe/
+datapath=/data06/yyq/mls/licom2/ctrl/exe/
 law=MMEAN
 
 fileslist=$(ls "$datapath$law"*)
@@ -16,3 +16,4 @@ done
 
 cdo mergetime $(ls "$datapath""YME"*) $datapath"YME".nc
 rm -f $(ls $datapath"YME"????.nc)
+rm -f $(ls $datapath"fort.22."*)

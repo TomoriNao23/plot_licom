@@ -1,8 +1,8 @@
 ;画经向流函数(包含年均和月数据)
-datapath = "/data06/yyq/mls/licom2_/ctrl/exe/"
+datapath = "/data06/yyq/mls/licom2/ctrl/exe/"
 fileslist = systemfunc("ls "+ datapath+"MMEAN" +"*")    
 f = addfiles(fileslist, "r")   
-;f = addfile(datapath+"YME.nc", "r")
+
 psi = f[:]->psi(:,{-2000:-500},{25:75})
 psi_maxtem = dim_max_n_Wrap(psi, 1)
 psi_max = dim_max_n_Wrap(psi_maxtem, 1)
