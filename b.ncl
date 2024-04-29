@@ -1,5 +1,5 @@
-;画经向流函数(包含年均和月数据)
-datapath = "/data06/yyq/mls/licom2/ctrl/exe/"
+;画经向流函数(包含年均和月数据)随时间的变化
+datapath = "/data06/yyq/mls/licom2/addwater_new/exe/"
 fileslist = systemfunc("ls "+ datapath+"MMEAN" +"*")    
 f = addfiles(fileslist, "r")   
 
@@ -25,6 +25,7 @@ f_yaer = addfile(datapath+"YME.nc", "r")
 psi_year = f_yaer->psi(:,{-2000:-500},{25:75})
 psi_year_maxtem = dim_max_n_Wrap(psi_year, 1)
 psi_year_max = dim_max_n_Wrap(psi_year_maxtem, 1)
+print(psi_year_max)
 year = dimsizes(psi_year_max)
 xx   = new((/year/),float) 
 xx   = ispan(1,year,1)

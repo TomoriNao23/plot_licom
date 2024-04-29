@@ -1,4 +1,4 @@
-datapath=/data06/yyq/mls/licom2/ctrl/exe/
+datapath=/data06/yyq/mls/licom2/addwater_new/exe/
 law=MMEAN
 
 fileslist=$(ls "$datapath$law"*)
