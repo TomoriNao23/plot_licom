@@ -13,7 +13,7 @@ year=$(($year_start + $i - 1))
 input=$(ls $fileslist|grep $(printf "%04d" $year))
 cdo ensmean $input $datapath"YME"$(printf "%04d" $i).nc
 done
-
+rm -f $(ls $datapath"YME".nc)
 cdo mergetime $(ls "$datapath""YME"*) $datapath"YME".nc
 rm -f $(ls $datapath"YME"????.nc)
-rm -f $(ls $datapath"fort.22."*)
+rm -f $(ls $datapath"fort.22."* 2>/dev/null)

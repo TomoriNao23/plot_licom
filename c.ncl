@@ -1,12 +1,11 @@
+;画最后一年年平均的正压流函数bsf
 datapath = "/data06/yyq/mls/licom2/ctrl/exe/"
 
 f_yaer = addfile(datapath+"YME.nc", "r")
 bsf_year = f_yaer->bsf(:,:,:)
 
-;datapath_ctrl = "/data06/yyq/mls/licom2/ctrl/exe/"
-
-;f_yaer_ctrl = addfile(datapath_ctrl+"YME.nc", "r")
-;bsf_year_ctrl = f_yaer_ctrl->bsf(:,:,:)
+size_time = dimsizes(bsf_year(:,0,0))
+bsf_year_last = bsf_year((size_time-1),:,:)
 
 wks = gsn_open_wks("png", "./c")
 plots=new(1,"graphic")
@@ -30,7 +29,6 @@ res_0 = True
 ;    res_0@cnFillPalette  = "temp_diff_18lev"
 
 
-printVarSummary(bsf_year(29,:,:))
 plots(0) = gsn_csm_contour_map(wks,bsf_year(29,:,:), res_0)
 
 resP = True

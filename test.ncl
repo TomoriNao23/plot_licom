@@ -15,25 +15,33 @@ copy_VarMeta(psi_year(0,:,:), psi_delta)
 
 wks = gsn_open_wks("png", "./test")
 plots=new(1,"graphic")
-    level                        = new((/16/),float)  
-    level                        = ispan(-20,10,2)
+    level                        = new((/31/),float)  
+    level                        = ispan(-20,10,1)
     level = level/10
 res_0 = True
     res_0@gsnDraw                =  False
     res_0@gsnFrame               =  False
     res_0@cnFillOn               = True
-
     res_0@cnLevelSelectionMode = "ExplicitLevels"
     res_0@cnLevels             = level
 ;    res_0@gsnLeftString = ""
-;    res_0@gsnLeftStringFontHeightF =15
+    res_0@gsnLeftStringFontHeightF =15
 ;    res_0@gsnRightString = "delta sst"
     res_0@gsnRightStringFontHeightF =15
 ;    res_0@cnFillPalette  = "temp_diff_18lev"
     res_0@gsnYAxisIrregular2Linear = True
-
+    res_0@cnInfoLabelOn        =  False              ;关闭右下角标注
+    res_0@cnLinesOn            =  False              ;不显示等值线
+    res_0@cnLineLabelsOn       =  False              ;不显示等值线数值
+    res_0@lbLabelBarOn         =  False              ;关闭colorbar
 
 plots(0) = gsn_csm_contour(wks,psi_delta, res_0)
 
 resP = True
+    resP@gsnPanelLabelBar = True
+    resP@lbLabelStride             = 5              ;colorbar每1个色块一个标注
+    resP@lbLabelAutoStride         = False          ;colorbar每条等值线均标注
+    resP@lbBoxSeparatorLinesOn     = False          ;colorbar内部边框隐藏
+    resP@lbBoxLinesOn              = False          ;colorbar外边框设置为隐藏
+    resP@lbBoxEndCapStyle          = "TriangleBothEnds"
 gsn_panel(wks, plots, (/1,1/), resP)
