@@ -1,0 +1,13 @@
+lon   = f_yaer ->lon(0:lon_size)
+jlon  = dimsizes(lon)
+jlat  = dimsizes(lat)
+dx    = new(jlat,float)
+dy    = new(1,float)
+
+angle2radian = 4.0 * atan(1.0) / 180.0
+radius_earth = 6371220
+dlon  = abs(lon(2) - lon(1)) * angle2radian
+dx    = (radius_earth * cos(lat * angle2radian)) * dlon
+dlat  = abs(lat(2) - lat(1)) * angle2radian
+dy    = radius_earth * dlat
+area = dx * dy
