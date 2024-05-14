@@ -1,4 +1,5 @@
-output                 = "/home/yyq/mls/dataprocess/photo/t"
+;画经向热输送全球分布
+output                 = "/home/yyq/mls/dataprocess/photo/heat"
 datapath               = "/data06/yyq/mls/licom2/addwater_new/exe/"
 gridpath               = "/home/yyq/mls/dataprocess/nc/basin_new.nc"
 fileslist              = systemfunc("ls "+ datapath+"MMEAN" +"*") 
@@ -33,40 +34,38 @@ end do
 
 dz_conform = new((/time_size+1,lev_size,lat_size+1,lon_size+1/),float)          ;[12]  x [30]  x [115]  x [180]
 dz_conform=conform(dz_conform, dz, (/1/))
-
 dx_conform = new((/time_size+1,lev_size,lat_size+1,lon_size+1/),float)          ;[12]  x [30]  x [115]  x [180]
 dx_conform=conform(dx_conform, dx, (/2/))
 
 heat = vs * ts * dz_conform * dx_conform * Cp * rho0                            ;[12]  x [30]  x [115]  x [180]
-heat_integrate_lev =dim_sum_n(heat, 1)/(1e15)                                          ;[12]  x [115] x [180]
+heat_integrate_lev =dim_sum_n(heat, 1)/(1e15)                                   ;[12]  x [115] x [180]
 copy_VarMeta(vs(:,0,:,:), heat_integrate_lev)
 
 ;all basin
-heat_avg = dim_avg_n_Wrap(heat_integrate_lev,0)                                 ;[115] x [180]
-heat_avg_lat = dim_sum_n_Wrap(heat_avg,1)                                       ;[115]
-heat_avg_lat = runave (heat_avg_lat, 9, 0)
-
-;pacfic
-heat_avg_pacfic     = where(indd.eq.4, heat_avg, heat_avg@_FillValue)
-heat_avg_lat_pacfic = dim_avg_n_Wrap(heat_avg_pacfic,1)
-heat_avg_lat_pacfic = runave (heat_avg_lat_pacfic, 9, 0)
-
+heat_avg               = dim_avg_n_Wrap(heat_integrate_lev,0)                                     ;[115]lat x [180]lon
+heat_avg_lat           = dim_sum_n_Wrap(heat_avg,1)                                               ;[115]lat
+heat_avg_lat           = runave(heat_avg_lat, 9, 0)
+;Pacfic
+heat_avg_pacfic        = heat_avg
+heat_avg_pacfic        = where(indd.eq.4, heat_avg, heat_avg@_FillValue)
+heat_avg_lat_pacfic    = dim_sum_n_Wrap(heat_avg_pacfic,1)
+heat_avg_lat_pacfic    = runave(heat_avg_lat_pacfic, 9, 0)
 ;Atlantic
-heat_avg_atlantic     = where(indd.eq.2, heat_avg, heat_avg@_FillValue)
-heat_avg_lat_atlantic = dim_avg_n_Wrap(heat_avg_atlantic,1)
-heat_avg_lat_atlantic = runave (heat_avg_lat_atlantic, 9, 0)
-
-;indo
-heat_avg_indo     = where(indd.eq.3, heat_avg, heat_avg@_FillValue)
-heat_avg_lat_indo = dim_avg_n_Wrap(heat_avg_indo,1)
-heat_avg_lat_indo = runave (heat_avg_lat_indo, 9, 0)
+heat_avg_atlantic      = heat_avg
+heat_avg_atlantic      = where(indd.eq.2, heat_avg, heat_avg@_FillValue)
+heat_avg_lat_atlantic  = dim_sum_n_Wrap(heat_avg_atlantic,1)
+heat_avg_lat_atlantic  = runave(heat_avg_lat_atlantic, 9, 0)
+;Indian
+heat_avg_indian        = heat_avg
+heat_avg_indian        = where(indd.eq.3, heat_avg, heat_avg@_FillValue)
+heat_avg_lat_indian    = dim_sum_n_Wrap(heat_avg_indian,1)
+heat_avg_lat_indian    = runave(heat_avg_lat_indian, 9, 0)
 
 level                  = new((/51/),float)  
 level                  = ispan(-25,25,1)
 level                  = level / 10
 
 ;画图检验
-copy_VarMeta(vs(0,0,:,:), heat_avg)
 wks      = gsn_open_wks("png", output)
 plots    = new(1,"graphic")
 res_0    = True
@@ -98,6 +97,18 @@ resP    = True
     resP@pmLabelBarParallelPosF     = 0.025             ;colorbar水平偏移
     resP@lbBoxEndCapStyle           = "TriangleBothEnds"
 gsn_panel(wks, plots, (/1,1/), resP)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
