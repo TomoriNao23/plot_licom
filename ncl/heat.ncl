@@ -2,6 +2,7 @@
 output                 = "/home/yyq/mls/dataprocess/photo/heat"
 datapath               = "/data06/yyq/mls/licom2/addwater_new/exe/"
 gridpath               = "/home/yyq/mls/dataprocess/nc/basin_new.nc"
+
 fileslist              = systemfunc("ls "+ datapath+"MMEAN" +"*") 
 f                      = addfiles(fileslist, "r") 
 f_grid                 = addfile(gridpath, "r")

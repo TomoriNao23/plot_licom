@@ -23,12 +23,12 @@ xx                     = ispan(1,year,1)
 
 wks      = gsn_open_wks("png", output)
 plots    = new(1,"graphic")
-res_0    = True
-    res_0@gsnDraw                =  False
-    res_0@gsnFrame               =  False
-    res_0@tiXAxisString          =  "year" 
-plots(0) = gsn_csm_xy(wks, x, psi_max, res_0)
-plot_year= gsn_csm_xy(wks, xx, psi_year_max, res_0)
+resB_0    = True
+    resB_0@gsnDraw                =  False
+    resB_0@gsnFrame               =  False
+    resB_0@tiXAxisString          =  "year" 
+plots(0) = gsn_csm_xy(wks, x, psi_max, resB_0)
+plot_year= gsn_csm_xy(wks, xx, psi_year_max, resB_0)
 overlay(plots(0), plot_year)
 
 resP     = True

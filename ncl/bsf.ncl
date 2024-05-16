@@ -1,9 +1,9 @@
 ;画最后一年年平均的正压流函数bsf
 output                 = "/home/yyq/mls/dataprocess/photo/bsf"
 datapath               = "/data06/yyq/mls/licom2/ctrl/exe/"
-f_yaer                 = addfile(datapath+"YME.nc", "r")
+f_year                 = addfile(datapath+"YME.nc", "r")
 
-bsf_year_a             = f_yaer->bsf(:,:,:)
+bsf_year_a             = f_year->bsf(:,:,:)
 
 lon_size               = dimsizes(bsf_year_a(0,0,:)) - 3
 bsf_year               = bsf_year_a(:,:,0:lon_size)

@@ -35,7 +35,6 @@ end do
 
 dz_conform             = new((/time_size + 1,lev_size,lat_size + 1,lon_size + 1/),float)          ;[12]time x [30]lev x [115]lat x [180]lon
 dz_conform             = conform(dz_conform, dz, (/1/))
-
 dx_conform             = new((/time_size + 1,lev_size,lat_size + 1,lon_size + 1/),float)          ;[12]time x [30]lev x [115]lat x [180]lon
 dx_conform             = conform(dx_conform, dx, (/2/))
 
@@ -69,11 +68,12 @@ y(3,:)                 = heat_avg_lat
 y(2,:)                 = heat_avg_lat_pacfic
 y(1,:)                 = heat_avg_lat_atlantic
 y(0,:)                 = heat_avg_lat_indian
+print(avg(y(0,:)))
 
 ;draw
 wks                               = gsn_open_wks("png", output)
 plots                             = new(1,"graphic")
-res_0                             = True
+res_0    = True
     res_0@gsnDraw                 = False
     res_0@gsnFrame                = False           
     res_0@vpHeightF               = 0.3                                     ;图片高度
@@ -95,9 +95,7 @@ res_0                             = True
     res_0@pmLegendParallelPosF    = 0.89             ; Move legend to right
     res_0@pmLegendWidthF          = 0.13             ; Change width and height
     res_0@pmLegendHeightF         = 0.1
-  
-  res_0@xyExplicitLabels          = (/"Indian","Atlantic","Pacific","Total"/)  ; explicit labels
-
+    res_0@xyExplicitLabels        = (/"Indian","Atlantic","Pacific","Total"/)  ; explicit labels
 plots(0)                          = gsn_csm_xy(wks, lat,y/(1e15), res_0)
 
 resP                              = True
