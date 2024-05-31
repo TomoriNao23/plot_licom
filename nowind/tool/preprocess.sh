@@ -1,10 +1,5 @@
-#!bash
-###################################################################################
-#利用bash和cdo工具,利用月平均文件整合为年平均文件，并且整合为一个文件YME.NC
-###################################################################################
-
-#给出输入文件位置和命名规则
-datapath=/data06/yyq/mls/licom2/addwater/exe/
+%%bash
+datapath=/data06/yyq/mls/licom2/nowind/exe/
 law=MMEAN
 
 #根据输出文件计算开始年份，结束年份和总的年份
@@ -21,9 +16,8 @@ year=$(($year_start + $i - 1))
 input=$(ls $fileslist|grep $(printf "%04d" $year))
 cdo ensmean $input $datapath"YME"$(printf "%04d" $i).nc 
 done
-
 #将所有年平均文件整合为YME.nc,并且删除中间文件和fort.22.*文件
-rm -f $(ls $datapath"YME".nc)
+rm -f $(ls $datapath"YME".nc 2>/dev/null)
 cdo mergetime $(ls "$datapath""YME"*) $datapath"YME".nc
-rm -f $(ls $datapath"YME"????.nc)
+rm -f $(ls $datapath"YME"????.nc 2>/dev/null)
 rm -f $(ls $datapath"fort.22."* 2>/dev/null)
